@@ -43,7 +43,7 @@ namespace Modbus.ModbusFunctions
         /// <inheritdoc />
         public override Dictionary<Tuple<PointType, ushort>, ushort> ParseResponse(byte[] response)
         {
-            var povratna = new Dictionary<Tuple<PointType, ushort>, ushort>();
+            var odgovor = new Dictionary<Tuple<PointType, ushort>, ushort>();
 
             // response[7] - FunctionCode (0x05 + 0x80 == Error)
             // response[8] - OutputAddress (ExceptionCode ako je došlo do greške)
@@ -59,11 +59,10 @@ namespace Modbus.ModbusFunctions
                 adresa = (ushort)IPAddress.NetworkToHostOrder((short)adresa);
                 vrednost = (ushort)IPAddress.NetworkToHostOrder((short)vrednost & 1);     // Nisam sigurna za ovo
 
-                Tuple<PointType, ushort> kljuc = new Tuple<PointType, ushort>(PointType.DIGITAL_OUTPUT, adresa);
-                povratna.Add(kljuc, vrednost);
+                odgovor.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_OUTPUT, adresa), vrednost);
             }
 
-             return povratna;
+             return odgovor;
         }
     }
 }

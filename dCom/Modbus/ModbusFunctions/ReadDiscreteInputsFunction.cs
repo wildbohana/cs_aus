@@ -43,7 +43,7 @@ namespace Modbus.ModbusFunctions
         /// <inheritdoc />
         public override Dictionary<Tuple<PointType, ushort>, ushort> ParseResponse(byte[] response)
         {
-            var povratna = new Dictionary<Tuple<PointType, ushort>, ushort>();
+            var odgovor = new Dictionary<Tuple<PointType, ushort>, ushort>();
 
             // response[7] - FunctionCode (0x02 + 0x80 == Error)
             // response[8] - ByteCount (ExceptionCode ako je došlo do greške)
@@ -71,7 +71,7 @@ namespace Modbus.ModbusFunctions
                         temp >>= 1;
 
                         // DIGITAL_INPUT jer čitamo digitalan ulaz
-                        povratna.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_INPUT, adresa), vrednost);
+                        odgovor.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_INPUT, adresa), vrednost);
 
                         brojac++;
                         adresa++;
@@ -81,7 +81,7 @@ namespace Modbus.ModbusFunctions
                 }
             }
 
-            return povratna;
+            return odgovor;
         }
     }
 }

@@ -71,6 +71,7 @@ namespace Modbus.ModbusFunctions
                     // ANALOG_OUTPUT jer čitamo analogne registre
                     odgovor.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, adresa), vrednost);
 
+                    // Može i bez ovoga, ali nikad nije loše proveriti i drugi put da li smo došli do kraja
                     if (brojac == ((ModbusReadCommandParameters)CommandParameters).Quantity) break;
                 }
             }
