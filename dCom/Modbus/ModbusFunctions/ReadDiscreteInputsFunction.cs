@@ -76,7 +76,7 @@ namespace Modbus.ModbusFunctions
                         brojac++;
                         adresa++;
 
-                        if (brojac == ((ModbusReadCommandParameters)CommandParameters).Quantity) break;
+                        if (brojac >= ((ModbusReadCommandParameters)CommandParameters).Quantity) break;
                     }
                 }
             }

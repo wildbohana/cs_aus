@@ -3,9 +3,9 @@ TCP 503
 
 
 DO_REG  1 3000  0  0    1  0  DO  @Start   #
-DO_REG  1 3001  0  0    1  1  DO  @Motor   #
-DO_REG  1 4000  0  0    1  1  DO  @Ventil1 #
-DO_REG  1 4001  0  0    1  1  DO  @Ventil2 #
-DO_REG  1 4002  0  0    1  1  DO  @Ventil3 #
-DO_REG  1 4003  0  0    1  1  DO  @Ventil4 #
+DO_REG  1 3001  0  0    1  0  DO  @Motor   #
+DO_REG  1 4000  0  0    1  0  DO  @Ventil1 #
+DO_REG  1 4001  0  0    1  0  DO  @Ventil2 #
+DO_REG  1 4002  0  0    1  0  DO  @Ventil3 #
+DO_REG  1 4003  0  0    1  0  DO  @Ventil4 #
 HR_INT  1 1000  0  0  500  0  AI  @KolSas  #

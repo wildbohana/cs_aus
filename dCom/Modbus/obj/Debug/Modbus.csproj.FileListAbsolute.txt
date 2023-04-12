@@ -7,3 +7,12 @@ C:\Users\wildbohana\Desktop\aus\dCom\Modbus\obj\Debug\Modbus.csproj.CoreCompileI
 C:\Users\wildbohana\Desktop\aus\dCom\Modbus\obj\Debug\Modbus.csproj.CopyComplete
 C:\Users\wildbohana\Desktop\aus\dCom\Modbus\obj\Debug\Modbus.dll
 C:\Users\wildbohana\Desktop\aus\dCom\Modbus\obj\Debug\Modbus.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\bin\Debug\Modbus.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\bin\Debug\Modbus.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\bin\Debug\Common.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\bin\Debug\Common.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\obj\Debug\Modbus.csproj.AssemblyReference.cache
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\obj\Debug\Modbus.csproj.CoreCompileInputs.cache
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\obj\Debug\Modbus.csproj.CopyComplete
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\obj\Debug\Modbus.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Modbus\obj\Debug\Modbus.pdb

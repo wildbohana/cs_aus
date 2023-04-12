@@ -65,14 +65,14 @@ namespace Modbus.ModbusFunctions
                     vrednost = BitConverter.ToUInt16(response, 9 + i);
                     vrednost = (ushort)IPAddress.NetworkToHostOrder((short)vrednost);
 
-                    brojac++;
-                    adresa++;
-
                     // ANALOG_OUTPUT jer čitamo analogne ulaze
                     odgovor.Add(new Tuple<PointType, ushort>(PointType.ANALOG_INPUT, adresa), vrednost);
 
+                    brojac++;
+                    adresa++;
+
                     // Ne mora, ali ne škodi
-                    if (brojac == ((ModbusReadCommandParameters)CommandParameters).Quantity) break;
+                    if (brojac >= ((ModbusReadCommandParameters)CommandParameters).Quantity) break;
                 }
             }
 
