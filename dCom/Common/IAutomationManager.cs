@@ -8,8 +8,8 @@
         /// <summary>
         /// Starts the automation manager.
         /// </summary>
-        /// <param name="delayBetweenCommands">The delay between commands (in seconds).</param>
-		void Start(int delayBetweenCommands);
+        /// <param name="delayBetWweenCommands">The delay between commands (in seconds).</param>
+		void Start(int delayBetWweenCommands);
 
         /// <summary>
         /// Stops the autimation manager.

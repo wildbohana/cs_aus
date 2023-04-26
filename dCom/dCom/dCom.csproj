@@ -40,6 +40,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Modbus">
+      <HintPath>..\3rdPartyLibs\Modbus.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -134,10 +137,6 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{823d1355-efd0-481c-a0d9-fda0c4ea37df}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modbus\Modbus.csproj">
-      <Project>{65b26e48-3a6c-4bc4-af16-f77809b5afa2}</Project>
-      <Name>Modbus</Name>
     </ProjectReference>
     <ProjectReference Include="..\ProcessingModule\ProcessingModule.csproj">
       <Project>{a61facb3-147e-4fd9-88c1-a3f226157c23}</Project>

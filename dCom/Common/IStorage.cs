@@ -26,8 +26,8 @@ namespace Common
         /// <summary>
         /// Returns the list of points in the requested order.
         /// </summary>
-        /// <param name="pointIds"> The identifiers of the points that are requested. </param>
-        /// <returns> The list of poitns read from the storage. </returns>
+        /// <param name="pointIds">The identifiers of the points that are requested.</param>
+        /// <returns>The list of poitns read from the storage.</returns>
 		List<IPoint> GetPoints(List<PointIdentifier> pointIds);
 	}
 }

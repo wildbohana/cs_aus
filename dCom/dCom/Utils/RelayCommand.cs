@@ -6,21 +6,33 @@ namespace dCom.Utils
 {
     public class RelayCommand : ICommand
 	{
-		// Polja
+		#region Fields
+
 		private readonly Action<object> _execute;
 		private readonly Predicate<object> _canExecute;
-		
-		// Konstruktori
-		public RelayCommand(Action<object> execute)	: this(execute, null) { }
+
+		#endregion Fields
+
+		#region Constructors
+
+		public RelayCommand(Action<object> execute)
+			: this(execute, null)
+		{
+		}
+
 		public RelayCommand(Action<object> execute, Predicate<object> canExecute)
 		{
-			if (execute == null) throw new ArgumentNullException("execute");
+			if (execute == null)
+				throw new ArgumentNullException("execute");
 
 			_execute = execute;
 			_canExecute = canExecute;
 		}
 
-		// ICommand metode
+		#endregion Constructors
+
+		#region ICommand Members
+
 		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
@@ -37,5 +49,7 @@ namespace dCom.Utils
 		{
 			_execute(parameter);
 		}
+
+		#endregion ICommand Members
 	}
 }

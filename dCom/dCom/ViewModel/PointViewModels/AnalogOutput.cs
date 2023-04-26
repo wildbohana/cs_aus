@@ -5,8 +5,11 @@ namespace dCom.ViewModel
 {
     internal class AnalogOutput : AnalogBase
 	{
-        public AnalogOutput(IConfigItem c, IProcessingManager processingManager, IStateUpdater stateUpdater,
-            IConfiguration configuration, int i) : base(c, processingManager, stateUpdater, configuration, i) { }
+
+		public AnalogOutput(IConfigItem c, IProcessingManager processingManager, IStateUpdater stateUpdater, IConfiguration configuration, int i)
+			: base (c, processingManager, stateUpdater, configuration, i)
+		{		
+		}
 
 		protected override bool WriteCommand_CanExecute(object obj)
 		{

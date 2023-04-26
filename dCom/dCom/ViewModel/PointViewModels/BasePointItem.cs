@@ -8,8 +8,6 @@ namespace dCom.ViewModel
 {
     internal abstract class BasePointItem : ViewModelBase, IDataErrorInfo
 	{
-        int pointId;
-
 		protected PointType type;
 		protected ushort address;
 		private DateTime timestamp = DateTime.Now;
@@ -26,6 +24,7 @@ namespace dCom.ViewModel
 		protected IStateUpdater stateUpdater;
         protected IConfigItem configItem;
 
+        int pointId;
 		/// <summary>
 		/// Command that is executed when write button is clicked on control window;
 		/// Command should create write command parameters and provide it to FunctionFactory
@@ -82,12 +81,20 @@ namespace dCom.ViewModel
 			}
 		}
 
-		#region PROPERTIES
+		#region Properties
 
 		public PointType Type
 		{
-			get { return type; }
-			set { type = value; OnPropertyChanged("Type"); }
+			get
+			{
+				return type;
+			}
+
+			set
+			{
+				type = value;
+				OnPropertyChanged("Type");
+			}
 		}
 
 		/// <summary>
@@ -95,25 +102,51 @@ namespace dCom.ViewModel
 		/// </summary>
 		public ushort Address
 		{
-			get { return address; }
-			set { address = value; OnPropertyChanged("Address"); }
+			get
+			{
+				return address;
+			}
+
+			set
+			{
+				address = value;
+				OnPropertyChanged("Address");
+			}
 		}
 
 		public DateTime Timestamp
 		{
-			get { return timestamp; }
-			set { timestamp = value; OnPropertyChanged("Timestamp"); }
+			get
+			{
+				return timestamp;
+			}
+
+			set
+			{
+				timestamp = value;
+				OnPropertyChanged("Timestamp");
+			}
 		}
 
 		public string Name
 		{
-			get	{ return name; }
-			set { name = value; }
+			get
+			{
+				return name;
+			}
+
+			set
+			{
+				name = value;
+			}
 		}
 
 		public virtual string DisplayValue
 		{
-			get	{ return string.Empty; }
+			get
+			{
+				return string.Empty;
+			}
 		}
 
 		/// <summary>
@@ -121,8 +154,16 @@ namespace dCom.ViewModel
 		/// </summary>
 		public double CommandedValue
 		{
-			get { return commandedValue; }
-			set { commandedValue = value; OnPropertyChanged("CommandedValue"); }
+			get
+			{
+				return commandedValue;
+			}
+
+			set
+			{
+				commandedValue = value;
+				OnPropertyChanged("CommandedValue");
+			}
 		}
 
 		/// <summary>
@@ -130,33 +171,57 @@ namespace dCom.ViewModel
 		/// </summary>
 		public virtual ushort RawValue
 		{
-			get { return rawValue; }
-			set { rawValue = value; OnPropertyChanged("RawValue"); }
+			get
+			{
+				return rawValue;
+			}
+			set
+			{
+				rawValue = value;
+				OnPropertyChanged("RawValue");
+			}
 		}
 
         public IConfigItem ConfigItem
         {
-            get { return configItem; }
+            get
+            {
+                return configItem;
+            }
         }
 
-        #endregion
+        #endregion Properties
 
-        #region INPUT VALIDATION
+        #region Input validation
 
         public string Error
 		{
-			get { return string.Empty; }
+			get
+			{
+				return string.Empty;
+			}
 		}
 
 		public AlarmType Alarm
 		{
-			get { return alarm; }
-            set { alarm = value; OnPropertyChanged("Alarm"); }
+			get
+			{
+				return alarm;
+			}
+
+            set
+            {
+                alarm = value;
+                OnPropertyChanged("Alarm");
+            }
 		}
 
 		public int PointId
 		{
-			get { return pointId; }
+			get
+			{
+				return pointId;
+			}
 		}
 
         public string this[string columnName]
@@ -167,15 +232,18 @@ namespace dCom.ViewModel
 				if (columnName == "CommandedValue")
 				{
 					if (commandedValue > configItem.MaxValue)
+					{
 						message = $"Entered value cannot be greater than {configItem.MaxValue}.";
-					
+					}
 					if (commandedValue < configItem.MinValue)
+					{
 						message = $"Entered value cannot be lower than {configItem.MinValue}.";
+					}
 				}
 				return message;
 			}
 		}
 
-		#endregion
+		#endregion Input validation
 	}
 }

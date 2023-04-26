@@ -6,18 +6,32 @@ namespace dCom.ViewModel
     {
 		private DState state;
 
-		public DigitalBase(IConfigItem c, IProcessingManager processingManager, IStateUpdater stateUpdater,
-			IConfiguration configuration, int i) : base(c, processingManager, stateUpdater, configuration, i) { }
+		public DigitalBase(IConfigItem c, IProcessingManager processingManager, IStateUpdater stateUpdater, IConfiguration configuration, int i) 
+			: base(c, processingManager, stateUpdater, configuration, i)
+		{
+        }
 
 		public DState State
 		{
-			get { return state; }
-			set { state = value; OnPropertyChanged("State"); OnPropertyChanged("DisplayValue"); }
+			get
+			{
+				return state;
+			}
+
+			set
+			{
+				state = value;
+				OnPropertyChanged("State");
+				OnPropertyChanged("DisplayValue");
+			}
 		}
 
 		public override string DisplayValue
 		{
-			get { return State.ToString(); }
+			get
+			{
+				return State.ToString();
+			}
 		}
 
         protected override bool WriteCommand_CanExecute(object obj)

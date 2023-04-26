@@ -6,10 +6,10 @@ using System.Windows.Data;
 
 namespace dCom.Converters
 {
-    // DO_REG RW
-    // DI_REG R
-    // IN_REG R
-    // HR_INT RW
+    //DO_REG RW
+    //DI_REG R
+    //IN_REG R
+    //HR_INT RW
 
     public class PointTypeToVisibilityConverter : IValueConverter
 	{
@@ -18,15 +18,14 @@ namespace dCom.Converters
 			if (value != null && value is PointType)
 			{
 				PointType pt = (PointType)value;
-
 				if (pt == PointType.DIGITAL_OUTPUT || pt == PointType.ANALOG_OUTPUT)
+				{
 					return Visibility.Visible;
+				}
 			}
-
 			return Visibility.Collapsed;
 		}
 
-		// TODO
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			throw new NotImplementedException();

@@ -3,10 +3,10 @@
     /// <summary>
     /// Delegate used for processing update point events.
     /// </summary>
-    /// <param name="type"> The type of the point. </param>
-    /// <param name="pointAddress"> The address of the point. </param>
-    /// <param name="newValue"> The new value received for the point. </param>
-    public delegate void UpdatePointDelegate(PointType type, ushort pointAddress, ushort newValue);
+    /// <param name="type">The type of the point.</param>
+    /// <param name="pointAddres">The address of the point.</param>
+    /// <param name="newValue">The new value received for the point.</param>
+    public delegate void UpdatePointDelegate(PointType type, ushort pointAddres, ushort newValue);
 
     /// <summary>
     /// Interface containing logic for sending modbus requests and receiving point values. 
@@ -16,7 +16,7 @@
         /// <summary>
         /// Enqueues a modbus command/request.
         /// </summary>
-        /// <param name="send"> The modbus function that should be enqueued. </param>
+        /// <param name="send">The modbus function that should be enqueued.</param>
 		void EnqueueCommand(IModbusFunction send);
 
         /// <summary>

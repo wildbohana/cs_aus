@@ -10,9 +10,7 @@ namespace dCom.Configuration
 {
     internal class ConfigReader : IConfiguration
 	{
-        #region FIELDS
-
-        private ushort transactionId = 0;
+		private ushort transactionId = 0;
 
 		private byte unitAddress;
 		private int tcpPort;
@@ -22,84 +20,49 @@ namespace dCom.Configuration
 
 		private string path = "RtuCfg.txt";
 
-        #endregion
-
-        #region PROPERTIES
-
-        public ushort GetTransactionId()
-        {
-            return transactionId++;
-        }
-
-        public byte UnitAddress
-        {
-            get { return unitAddress; }
-            private set { unitAddress = value; }
-        }
-
-        public int TcpPort
-        {
-            get { return tcpPort; }
-            private set { tcpPort = value; }
-        }
-
-        private int dbc;
-        public int DelayBetweenCommands
-        {
-            get { return dbc; }
-            private set { dbc = value; }
-        }
-
-        #endregion
-
-        // Konstruktor
-        public ConfigReader()
+		public ConfigReader()
 		{
-			if (!File.Exists(path))	OpenConfigFile();
+			if (!File.Exists(path))
+			{
+				OpenConfigFile();
+			}
 
 			ReadConfiguration();
 		}
 
-        // Metode
-        public List<IConfigItem> GetConfigurationItems()
-        {
-            return new List<IConfigItem>(pointTypeToConfiguration.Values);
-        }
-
-        public int GetAcquisitionInterval(string pointDescription)
+		public int GetAcquisitionInterval(string pointDescription)
 		{
 			IConfigItem ci;
-
 			if (pointTypeToConfiguration.TryGetValue(pointDescription, out ci))
+			{
 				return ci.AcquisitionInterval;
-			
+			}
 			throw new ArgumentException(string.Format("Invalid argument:{0}", nameof(pointDescription)));
 		}
 
 		public ushort GetStartAddress(string pointDescription)
 		{
 			IConfigItem ci;
-
 			if (pointTypeToConfiguration.TryGetValue(pointDescription, out ci))
+			{
 				return ci.StartAddress;
-
+			}
 			throw new ArgumentException(string.Format("Invalid argument:{0}", nameof(pointDescription)));
 		}
 
 		public ushort GetNumberOfRegisters(string pointDescription)
 		{
 			IConfigItem ci;
-
 			if (pointTypeToConfiguration.TryGetValue(pointDescription, out ci))
+			{
 				return ci.NumberOfRegisters;
-			
+			}
 			throw new ArgumentException(string.Format("Invalid argument:{0}", nameof(pointDescription)));
 		}
 
 		private void OpenConfigFile()
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
-
 			dlg.Multiselect = false;
 			dlg.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 			dlg.FileOk += Dlg_FileOk;
@@ -116,44 +79,36 @@ namespace dCom.Configuration
 			using (TextReader tr = new StreamReader(path))
 			{
 				string s = string.Empty;
-
 				while ((s = tr.ReadLine()) != null)
 				{
 					string[] splited = s.Split(' ', '\t');
 					List<string> filtered = splited.ToList().FindAll(t => !string.IsNullOrEmpty(t));
-
-					if (filtered.Count == 0) continue;
-
-					// Primili smo adresu
+					if (filtered.Count == 0)
+					{
+						continue;
+					}
 					if (s.StartsWith("STA"))
 					{
 						unitAddress = Convert.ToByte(filtered[filtered.Count - 1]);
 						continue;
 					}
-					
-					// Primili smo TCP port
 					if (s.StartsWith("TCP"))
 					{
 						TcpPort = Convert.ToInt32(filtered[filtered.Count - 1]);
 						continue;
 					}
-
-					// Primili smo razmak izmađu komandi
 					if (s.StartsWith("DBC"))
 					{
 						DelayBetweenCommands = Convert.ToInt32(filtered[filtered.Count - 1]);
 						continue;
 					}
-
 					try
                     {
                         ConfigItem ci = new ConfigItem(filtered);
-
                         if (pointTypeToConfiguration.Count > 0)
                         {
                             foreach (ConfigItem cf in pointTypeToConfiguration.Values)
                             {
-								// Provera da li su podešavanja za tačke jedinstvena
                                 if (!confItemEqComp.Equals(cf, ci))
                                 {
                                     pointTypeToConfiguration.Add(ci.Description, ci);
@@ -175,10 +130,60 @@ namespace dCom.Configuration
                         throw ex;
                     }
                 }
-
 				if (pointTypeToConfiguration.Count == 0)
+				{
 					throw new ConfigurationException("Configuration error! Check RtuCfg.txt file!");
+				}
 			}
+		}
+
+		public ushort GetTransactionId()
+		{
+			return transactionId++;
+		}
+
+		public byte UnitAddress
+		{
+			get
+			{
+				return unitAddress;
+			}
+
+			private set
+			{
+				unitAddress = value;
+			}
+		}
+
+		public int TcpPort
+		{
+			get
+			{
+				return tcpPort;
+			}
+
+			private set
+			{
+				tcpPort = value;
+			}
+		}
+		private int dbc;
+		public int DelayBetweenCommands
+		{
+			get
+			{
+				return dbc;
+			}
+
+			private set
+			{
+				dbc = value;
+			}
+		}
+
+		public List<IConfigItem> GetConfigurationItems()
+		{
+			return new List<IConfigItem>(pointTypeToConfiguration.Values);
 		}
 	}
 }
