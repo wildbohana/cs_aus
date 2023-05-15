@@ -14,3 +14,13 @@ C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\ProcessingModule\bin\Debug\Common.
 C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\ProcessingModule\obj\Debug\ProcessingModule.csprojResolveAssemblyReference.cache
 C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\ProcessingModule\obj\Debug\ProcessingModule.dll
 C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\ProcessingModule\obj\Debug\ProcessingModule.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\bin\Debug\ProcessingModule.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\bin\Debug\ProcessingModule.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\bin\Debug\Common.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\bin\Debug\Modbus.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\bin\Debug\Common.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\obj\Debug\ProcessingModule.csproj.AssemblyReference.cache
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\obj\Debug\ProcessingModule.csproj.CoreCompileInputs.cache
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\obj\Debug\ProcessingModule.csproj.CopyComplete
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\obj\Debug\ProcessingModule.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\ProcessingModule\obj\Debug\ProcessingModule.pdb

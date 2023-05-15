@@ -99,14 +99,14 @@ namespace ProcessingModule
                     processingManager.ExecuteWriteCommand(tacke[3].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil1.Address, 1);
                 }
 
-                // Ventili - Čokolada (+50 l/s)
+                // Ventil1 - Čokolada (+50 l/s)
                 if (tacke[3].RawValue == 1 && tacke[1].RawValue == 1)
                 {
                     if ((tempSuma += 50) <= 100)
                     {
                         kolSas += 50;
 
-                        if (kolSas < configElement.HighLimit)
+                        if (kolSas <= configElement.MaxValue)
                         {
                             processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
                         }
@@ -114,6 +114,7 @@ namespace ProcessingModule
                         {
                             tempSuma = 0;
                             processingManager.ExecuteWriteCommand(tacke[3].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil1.Address, 0);
+                            automationTrigger.WaitOne();
                             processingManager.ExecuteWriteCommand(tacke[2].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, mesalica.Address, 1);
                         }
                     }
@@ -121,6 +122,7 @@ namespace ProcessingModule
                     {
                         tempSuma = 0;
                         processingManager.ExecuteWriteCommand(tacke[3].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil1.Address, 0);
+                        automationTrigger.WaitOne();
                         processingManager.ExecuteWriteCommand(tacke[4].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil2.Address, 1);
                     }
                 }
@@ -132,7 +134,7 @@ namespace ProcessingModule
                     {
                         kolSas += 50;
 
-                        if (kolSas < configElement.HighLimit)
+                        if (kolSas <= configElement.MaxValue)
                         {
                             processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
                         }
@@ -140,6 +142,7 @@ namespace ProcessingModule
                         {
                             tempSuma = 0;
                             processingManager.ExecuteWriteCommand(tacke[4].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil2.Address, 0);
+                            automationTrigger.WaitOne();
                             processingManager.ExecuteWriteCommand(tacke[2].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, mesalica.Address, 1);
                         }
                     }
@@ -147,6 +150,7 @@ namespace ProcessingModule
                     {
                         tempSuma = 0;
                         processingManager.ExecuteWriteCommand(tacke[4].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil2.Address, 0);
+                        automationTrigger.WaitOne();
                         processingManager.ExecuteWriteCommand(tacke[5].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil3.Address, 1);
                     }                    
                 }
@@ -158,7 +162,7 @@ namespace ProcessingModule
                     {
                         kolSas += 30;
 
-                        if (kolSas < configElement.HighLimit)
+                        if (kolSas <= configElement.MaxValue)
                         {
                             processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
                         }
@@ -166,6 +170,7 @@ namespace ProcessingModule
                         {
                             tempSuma = 0;
                             processingManager.ExecuteWriteCommand(tacke[5].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil3.Address, 0);
+                            automationTrigger.WaitOne();
                             processingManager.ExecuteWriteCommand(tacke[2].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, mesalica.Address, 1);
                         }
                     }
@@ -173,6 +178,7 @@ namespace ProcessingModule
                     {
                         tempSuma = 0;
                         processingManager.ExecuteWriteCommand(tacke[5].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil3.Address, 0);
+                        automationTrigger.WaitOne();
                         processingManager.ExecuteWriteCommand(tacke[2].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, mesalica.Address, 1);
                     }                    
                 }
@@ -185,31 +191,33 @@ namespace ProcessingModule
                         automationTrigger.WaitOne();
 
                     processingManager.ExecuteWriteCommand(tacke[2].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, mesalica.Address, 0);
+                    automationTrigger.WaitOne();
                     processingManager.ExecuteWriteCommand(tacke[6].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil4.Address, 1);
                 }
 
                 // Ventil4 - Pražnjenje (-100 kg/s)
                 if (tacke[6].RawValue == 1 && tacke[1].RawValue == 1)
                 {
-                    kolSas -= 100;
+                    int temp = kolSas - 100;
 
-                    if (kolSas > configElement.LowLimit)
+                    if (temp >= configElement.MinValue)
                     {
-                        processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
+                        processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, temp);
                     }
                     else
                     {
                         processingManager.ExecuteWriteCommand(tacke[6].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil4.Address, 0);
+                        automationTrigger.WaitOne();
                         processingManager.ExecuteWriteCommand(tacke[1].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, start.Address, 0);
                     }
                 }
                 #endregion
 
                 #region RUČNO
-                // Ako nije pokrenut proces punjenja, onda samo držati otvorene ventile
+                // Ako nije pokrenut proces punjenja, onda samo držati otvorene ventile dok ne dođe do limita
                 if (tacke[3].RawValue == 1 && tacke[1].RawValue == 0)
                 {
-                    if ((kolSas += 50) <= configElement.HighLimit)
+                    if ((kolSas += 50) <= configElement.MaxValue)
                         processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
                     else
                         processingManager.ExecuteWriteCommand(tacke[3].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil1.Address, 0);
@@ -217,7 +225,7 @@ namespace ProcessingModule
 
                 if (tacke[4].RawValue == 1 && tacke[1].RawValue == 0)
                 {
-                    if ((kolSas += 50) <= configElement.HighLimit)
+                    if ((kolSas += 50) <= configElement.MaxValue)
                         processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
                     else
                         processingManager.ExecuteWriteCommand(tacke[4].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil2.Address, 0);
@@ -225,7 +233,7 @@ namespace ProcessingModule
 
                 if (tacke[5].RawValue == 1 && tacke[1].RawValue == 0)
                 {
-                    if ((kolSas += 30) <= configElement.HighLimit)
+                    if ((kolSas += 30) <= configElement.MaxValue)
                         processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
                     else
                         processingManager.ExecuteWriteCommand(tacke[5].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil3.Address, 0);
@@ -233,8 +241,9 @@ namespace ProcessingModule
 
                 if (tacke[6].RawValue == 1 && tacke[1].RawValue == 0)
                 {
-                    if ((kolSas -= 100) > configElement.LowLimit)
-                        processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, kolSas);
+                    int temp = kolSas - 100;
+                    if ((temp) >= configElement.MinValue)
+                        processingManager.ExecuteWriteCommand(configElement, configuration.GetTransactionId(), configuration.UnitAddress, kolicinaSastojaka.Address, temp);
                     else
                         processingManager.ExecuteWriteCommand(tacke[6].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, ventil4.Address, 0);
                 }

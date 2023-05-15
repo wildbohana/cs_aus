@@ -8,3 +8,9 @@ C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\Common\bin\Debug\Common.pdb
 C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
 C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\Common\obj\Debug\Common.dll
 C:\Users\Okarakterisan\Desktop\FTN-SCADA\dCom\Common\obj\Debug\Common.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Common\bin\Debug\Common.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Common\bin\Debug\Common.pdb
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Common\obj\Debug\Common.csproj.AssemblyReference.cache
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Common\obj\Debug\Common.dll
+C:\Users\wildb\Documents\GitHub\cs_aus\dCom\Common\obj\Debug\Common.pdb

@@ -43,40 +43,47 @@ namespace ProcessingModule
         // TODO zabrani menjanje stanja ventila ako je neki od njih uključen
         public void ExecuteWriteCommand(IConfigItem configItem, ushort transactionId, byte remoteUnitAddress, ushort pointAddress, int value)
         {
-            // Verovatno trebam da izbacim ovo troje od gore
-            PointIdentifier start = new PointIdentifier(PointType.DIGITAL_OUTPUT, 3000);
-            PointIdentifier mesalica = new PointIdentifier(PointType.DIGITAL_OUTPUT, 3001);     // 1
-            PointIdentifier ventil1 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4000);      // 2
-            PointIdentifier ventil2 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4001);      // 3
-            PointIdentifier ventil3 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4002);      // 4
-            PointIdentifier ventil4 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4003);      // 5
+            EGUConverter egu = new EGUConverter();
 
-            List<PointIdentifier> lista = new List<PointIdentifier> { start, mesalica, ventil1, ventil2, ventil3, ventil4 };
+            PointIdentifier start = new PointIdentifier(PointType.DIGITAL_OUTPUT, 3000);            // 0
+            PointIdentifier mesalica = new PointIdentifier(PointType.DIGITAL_OUTPUT, 3001);         // 1
+            PointIdentifier ventil1 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4000);          // 2
+            PointIdentifier ventil2 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4001);          // 3
+            PointIdentifier ventil3 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4002);          // 4
+            PointIdentifier ventil4 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 4003);          // 5
+            PointIdentifier kolicinaSastojaka = new PointIdentifier(PointType.ANALOG_OUTPUT, 1000); // 6
+
+            List<PointIdentifier> lista = new List<PointIdentifier> { start, mesalica, ventil1, ventil2, ventil3, ventil4, kolicinaSastojaka };
             List<IPoint> tacke = storage.GetPoints(lista);
 
-            // TODO popravi ovo, sve osim ovoga mi je dobro
-            /*
-            // Spreči istovremeno pražnjenje i punjenje mešalice
-            if ((tacke[2].RawValue == 1 || tacke[3].RawValue == 1 || tacke[4].RawValue == 1) && value == 1 && pointAddress == 4003)
+            int valAnalog = (int)egu.ConvertToEGU(tacke[6].ConfigItem.ScaleFactor, tacke[6].ConfigItem.Deviation, tacke[6].RawValue);
+
+            // Ako je upaljen prvi/drugi/treći/četvrti ventil, a želimo da upalimo i ostale
+            if (tacke[2].RawValue == 1 && (pointAddress == 4001 || pointAddress == 4002 || pointAddress == 4003) && value == 1)
             {
-                ExecuteDigitalCommand(configItem, transactionId, remoteUnitAddress, tacke[5].ConfigItem.StartAddress, 0);       // izlaz - zatvori
                 return;
             }
-            if (tacke[5].RawValue == 1 && value == 1 && (pointAddress == 4000 || pointAddress == 4001 || pointAddress == 4002))
+            if (tacke[3].RawValue == 1 && (pointAddress == 4000 || pointAddress == 4002 || pointAddress == 4003) && value == 1)
             {
-                ExecuteDigitalCommand(configItem, transactionId, remoteUnitAddress, pointAddress, 0);       // ulaz - zatvori
+                return;
+            }
+            if (tacke[4].RawValue == 1 && (pointAddress == 4000 || pointAddress == 4001 || pointAddress == 4003) && value == 1)
+            {
+                return;
+            }
+            if (tacke[5].RawValue == 1 && (pointAddress == 4000 || pointAddress == 4001 || pointAddress == 4002) && value == 1)
+            {
                 return;
             }
 
             // U fazi punjenja mešalice, motor za mešanje ne sme da bude uključen
-            if (tacke[0].RawValue == 1 && (tacke[2].RawValue == 1 || tacke[3].RawValue == 1 || tacke[4].RawValue == 1) && value == 1 && pointAddress == 3001)
+            if ((tacke[2].RawValue == 1 || tacke[3].RawValue == 1 || tacke[4].RawValue == 1) && pointAddress == 3001 && value == 1)
             {
-                ExecuteDigitalCommand(configItem, transactionId, remoteUnitAddress, tacke[1].ConfigItem.StartAddress, 0);       // mešalica - ugasi
                 return;
             }
 
             // Ukoliko se bilo koji od ventila otvori u fazi mešanja, potrebno je ugasiti mešalicu, zatvoriti sve ventile, i isprazniti mešalicu
-            if (tacke[0].RawValue == 1 && tacke[1].RawValue == 1 && (pointAddress == 4000 || pointAddress == 4001 || pointAddress == 4002) && value == 1)
+            if (tacke[1].RawValue == 1 && (pointAddress == 4000 || pointAddress == 4001 || pointAddress == 4002) && value == 1)
             {
                 ExecuteDigitalCommand(configItem, transactionId, remoteUnitAddress, tacke[1].ConfigItem.StartAddress, 0);       // mešalica - ugasi
                 ExecuteDigitalCommand(configItem, transactionId, remoteUnitAddress, tacke[2].ConfigItem.StartAddress, 0);       // ventil1 - zatvori
@@ -85,7 +92,6 @@ namespace ProcessingModule
                 ExecuteDigitalCommand(configItem, transactionId, remoteUnitAddress, tacke[5].ConfigItem.StartAddress, 1);       // ventil4 - otvori
                 return;
             }
-            */
 
             // Već postojalo, ovo iznad je dodato
             if (configItem.RegistryType == PointType.ANALOG_OUTPUT)
