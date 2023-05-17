@@ -12,7 +12,6 @@ namespace dCom.Converters
 			return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
 		}
 
-		// TODO
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			throw new NotImplementedException();

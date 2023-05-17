@@ -6,8 +6,10 @@ namespace dCom.ViewModel
     internal class DigitalOutput : DigitalBase
 	{
 
-        public DigitalOutput(IConfigItem c, IProcessingManager processingManager, IStateUpdater stateUpdater,
-            IConfiguration configuration, int i) : base(c, processingManager, stateUpdater, configuration, i) { }
+		public DigitalOutput(IConfigItem c, IProcessingManager processingManager, IStateUpdater stateUpdater, IConfiguration configuration, int i)
+			: base(c, processingManager, stateUpdater, configuration, i)
+		{
+		}
 
 		protected override bool WriteCommand_CanExecute(object obj)
 		{

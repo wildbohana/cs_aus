@@ -1,5 +1,6 @@
 ﻿using Common;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace ProcessingModule
@@ -54,9 +55,25 @@ namespace ProcessingModule
         /// <summary>
         /// Acquisitor thread logic.
         /// </summary>
+        // TODO implementiraj
 		private void Acquisition_DoWork()
 		{
-            //TODO: IMPLEMENT
+            List<IConfigItem> lista = configuration.GetConfigurationItems();
+            
+            while (true)
+            {
+                acquisitionTrigger.WaitOne();
+
+                foreach (IConfigItem ci in lista)
+                {
+                    ci.SecondsPassedSinceLastPoll++;
+                    if (ci.SecondsPassedSinceLastPoll == ci.AcquisitionInterval)
+                    {
+                        processingManager.ExecuteReadCommand(ci, configuration.GetTransactionId(), configuration.UnitAddress, ci.StartAddress, ci.NumberOfRegisters);
+                        ci.SecondsPassedSinceLastPoll = 0;                        
+                    }
+                }    
+            }
         }
 
         #endregion Private Methods

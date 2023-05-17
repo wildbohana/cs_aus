@@ -33,131 +33,264 @@ namespace dCom.Configuration
 
 		public PointType RegistryType
 		{
-			get	{ return registryType; } 
-			set	{ registryType = value;	}
+			get
+			{
+				return registryType;
+			}
+
+			set
+			{
+				registryType = value;
+			}
 		}
 
 		public ushort NumberOfRegisters
 		{
-			get	{ return numberOfRegisters; }
-			set	{ numberOfRegisters = value; }
+			get
+			{
+				return numberOfRegisters;
+			}
+
+			set
+			{
+				numberOfRegisters = value;
+			}
 		}
 
 		public ushort StartAddress
 		{
-			get	{ return startAddress; }
-			set	{ startAddress = value; }
+			get
+			{
+				return startAddress;
+			}
+
+			set
+			{
+				startAddress = value;
+			}
 		}
 
 		public ushort DecimalSeparatorPlace
 		{
-			get	{ return decimalSeparatorPlace; }
-			set	{ decimalSeparatorPlace = value; }
+			get
+			{
+				return decimalSeparatorPlace;
+			}
+
+			set
+			{
+				decimalSeparatorPlace = value;
+			}
 		}
 
 		public ushort MinValue
 		{
-			get { return minValue; }
-			set	{ minValue = value; }
+			get
+			{
+				return minValue;
+			}
+
+			set
+			{
+				minValue = value;
+			}
 		}
 
 		public ushort MaxValue
 		{
-			get	{ return maxValue; }
-			set	{ maxValue = value; }
+			get
+			{
+				return maxValue;
+			}
+
+			set
+			{
+				maxValue = value;
+			}
 		}
 
 		public ushort DefaultValue
 		{
-			get	{ return defaultValue; }
-			set	{ defaultValue = value; }
+			get
+			{
+				return defaultValue;
+			}
+
+			set
+			{
+				defaultValue = value;
+			}
 		}
 
 		public string ProcessingType
 		{
-			get	{ return processingType; }
-			set { processingType = value; }
+			get
+			{
+				return processingType;
+			}
+
+			set
+			{
+				processingType = value;
+			}
 		}
 
 		public string Description
 		{
-			get	{ return description; }
-			set	{ description = value; }
+			get
+			{
+				return description;
+			}
+
+			set
+			{
+				description = value;
+			}
 		}
 
 		public int AcquisitionInterval
 		{
-			get	{ return acquisitionInterval; }
-			set { acquisitionInterval = value; }
+			get
+			{
+				return acquisitionInterval;
+			}
+
+			set
+			{
+				acquisitionInterval = value;
+			}
 		}
 
 		public double ScaleFactor
 		{
-			get	{ return scalingFactor; }
-			set	{ scalingFactor = value; } 
+			get
+			{
+				return scalingFactor;
+			}
+			set
+			{
+				scalingFactor = value;
+			} 
 		}
 
 		public double Deviation
 		{
-			get	{ return deviation; }
-			set	{ deviation = value; }
+			get
+			{
+				return deviation;
+			}
+
+			set
+			{
+				deviation = value;
+			}
 		}
 
 		public double EGU_Max
 		{
-			get { return egu_max; }
-			set { egu_max = value; }
+			get
+			{
+				return egu_max;
+			}
+
+			set
+			{
+				egu_max = value;
+			}
 		}
 
 		public double EGU_Min
 		{
-			get { return egu_min; }
-			set { egu_min = value; }
+			get
+			{
+				return egu_min;
+			}
+
+			set
+			{
+				egu_min = value;
+			}
 		}
 
 		public ushort AbnormalValue
 		{
-			get { return abnormalValue; }
-			set { abnormalValue = value; }
+			get
+			{
+				return abnormalValue;
+			}
+
+			set
+			{
+				abnormalValue = value;
+			}
 		}
 
 		public double HighLimit
 		{
-			get	{ return highLimit; }
-			set { highLimit = value; }
+			get
+			{
+				return highLimit;
+			}
+
+			set
+			{
+				highLimit = value;
+			}
 		}
 
 		public double LowLimit
 		{
-			get { return lowLimit; }
-			set { lowLimit = value; }
+			get
+			{
+				return lowLimit;
+			}
+
+			set
+			{
+				lowLimit = value;
+			}
 		}
 
         public int SecondsPassedSinceLastPoll
         {
-            get { return secondsPassedSinceLastPoll; }
-            set { secondsPassedSinceLastPoll = value; }
+            get
+            {
+                return secondsPassedSinceLastPoll;
+            }
+
+            set
+            {
+                secondsPassedSinceLastPoll = value;
+            }
         }
 
         #endregion Properties
 
-		// Konstruktor
+		// TODO dopuni za ostale vrednosti
         public ConfigItem(List<string> configurationParameters)
 		{
+			RegistryType = GetRegistryType(configurationParameters[0]);
+			
 			int temp;
 			double doubleTemp;
 
-			RegistryType = GetRegistryType(configurationParameters[0]);			
-			Int32.TryParse(configurationParameters[1], out temp); NumberOfRegisters = (ushort)temp;
-			Int32.TryParse(configurationParameters[2], out temp); StartAddress = (ushort)temp;
-			Int32.TryParse(configurationParameters[3], out temp); DecimalSeparatorPlace = (ushort)temp;
-			Int32.TryParse(configurationParameters[4], out temp); MinValue = (ushort)temp;
-			Int32.TryParse(configurationParameters[5], out temp); MaxValue = (ushort)temp;
-			Int32.TryParse(configurationParameters[6], out temp); DefaultValue = (ushort)temp;
+			Int32.TryParse(configurationParameters[1], out temp);
+			NumberOfRegisters = (ushort)temp;
+			Int32.TryParse(configurationParameters[2], out temp);
+			StartAddress = (ushort)temp;
+			Int32.TryParse(configurationParameters[3], out temp);
+			DecimalSeparatorPlace = (ushort)temp;
+			Int32.TryParse(configurationParameters[4], out temp);
+			MinValue = (ushort)temp;
+			Int32.TryParse(configurationParameters[5], out temp);
+			MaxValue = (ushort)temp;
+			Int32.TryParse(configurationParameters[6], out temp);
+
+			DefaultValue = (ushort)temp;
 			ProcessingType = configurationParameters[7];
 			Description = configurationParameters[8].TrimStart('@');
-
-            if (configurationParameters[9].Equals("#"))
+            
+			if (configurationParameters[9].Equals("#"))
             {
                 AcquisitionInterval = 1;
             }
@@ -166,29 +299,48 @@ namespace dCom.Configuration
                 Int32.TryParse(configurationParameters[9], out temp);
                 AcquisitionInterval = temp;
             }
+
+			// TODO Pročitaj ostala polja...
+			Double.TryParse(configurationParameters[10], out doubleTemp);
+			scalingFactor = doubleTemp;
+			Double.TryParse(configurationParameters[11], out doubleTemp);
+			deviation = doubleTemp;
+            Double.TryParse(configurationParameters[12], out doubleTemp);
+            EGU_Max = doubleTemp;
+            Double.TryParse(configurationParameters[13], out doubleTemp);
+            EGU_Min = doubleTemp;
+            Double.TryParse(configurationParameters[14], out doubleTemp);
+            AbnormalValue = (ushort)doubleTemp;
+            Double.TryParse(configurationParameters[15], out doubleTemp);
+            HighLimit = doubleTemp; 
+			Double.TryParse(configurationParameters[16], out doubleTemp);
+            LowLimit = doubleTemp;
         }
 
-		// Pomoćna funkcija za dobijnje tipa registra
-		private PointType GetRegistryType(string registryTypeName)
+        private PointType GetRegistryType(string registryTypeName)
 		{
 			PointType registryType;
-
 			switch (registryTypeName)
 			{
 				case "DO_REG":
-					registryType = PointType.DIGITAL_OUTPUT; break;
+					registryType = PointType.DIGITAL_OUTPUT;
+					break;
 
 				case "DI_REG":
-					registryType = PointType.DIGITAL_INPUT; break;
+					registryType = PointType.DIGITAL_INPUT;
+					break;
 
 				case "IN_REG":
-					registryType = PointType.ANALOG_INPUT; break;
+					registryType = PointType.ANALOG_INPUT;
+					break;
 
 				case "HR_INT":
-					registryType = PointType.ANALOG_OUTPUT; break;
+					registryType = PointType.ANALOG_OUTPUT;
+					break;
 
 				default:
-					registryType = PointType.HR_LONG; break;
+					registryType = PointType.HR_LONG;
+					break;
 			}
 			return registryType;
 		}

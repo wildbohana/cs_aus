@@ -11,14 +11,14 @@ namespace dCom
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		// Inicijalizacija glavnog prozora
 		public MainWindow()
 		{
 			try
 			{
 				InitializeComponent();
 				this.Closed += Window_Closed;
-				DataContext = new MainViewModel();				
+				DataContext = new MainViewModel();
+				
 			}
 			catch (ConfigurationException confEx)
 			{
@@ -27,12 +27,11 @@ namespace dCom
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show($"Unexpected error occured!\nStack trace:\n{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show($"Unexpected error occured!{Environment.NewLine}Stack trace:{Environment.NewLine}{ex.StackTrace}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 				this.Close();
 			}
 		}
 
-		// Dvoklik otvara novi prozor za pregled stavke
 		private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			ControlWindow cw = new ControlWindow(dgPoints.SelectedItem as BasePointItem);
@@ -40,7 +39,6 @@ namespace dCom
 			cw.ShowDialog();
 		}
 
-		// Poziv Dispose() metode prilikom zatvaranja prozora
 		private void Window_Closed(object sender, EventArgs e)
 		{
 			(DataContext as IDisposable).Dispose();

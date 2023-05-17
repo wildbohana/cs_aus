@@ -15,18 +15,16 @@ namespace dCom.ViewModel
 	{
 		public ObservableCollection<BasePointItem> Points { get; set; }
 
-        Dictionary<int, IPoint> pointsCache = new Dictionary<int, IPoint>();
+		#region Fields
 
-        #region FIELDS
-
-        private object lockObject = new object();
+		private object lockObject = new object();
 		private Thread timerWorker;
 		private ConnectionState connectionState;
 		private Acquisitor acquisitor;
 		private AutoResetEvent acquisitionTrigger = new AutoResetEvent(false);
         private AutoResetEvent automationTrigger = new AutoResetEvent(false);
         private TimeSpan elapsedTime = new TimeSpan();
-		private Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+		private Dispatcher dispather = Dispatcher.CurrentDispatcher;
 		private string logText;
 		private StringBuilder logBuilder;
 		private DateTime currentTime;
@@ -36,69 +34,91 @@ namespace dCom.ViewModel
 		private bool disposed = false;
 		IConfiguration configuration;
         private IProcessingManager processingManager = null;
-		
-		#endregion
+		#endregion Fields
 
-		#region PROPERTIES
+		Dictionary<int, IPoint> pointsCache = new Dictionary<int, IPoint>();
+
+		#region Properties
 
 		public DateTime CurrentTime
 		{
-			get { return currentTime; }
-			set { currentTime = value; OnPropertyChanged("CurrentTime"); }
+			get
+			{
+				return currentTime;
+			}
+
+			set
+			{
+				currentTime = value;
+				OnPropertyChanged("CurrentTime");
+			}
 		}
 
 		public ConnectionState ConnectionState
 		{
-			get { return connectionState; }
+			get
+			{
+				return connectionState;
+			}
+
 			set
 			{
 				connectionState = value;
-
-				if (connectionState == ConnectionState.CONNECTED)
+				if(connectionState == ConnectionState.CONNECTED)
+				{
 					automationManager.Start(configuration.DelayBetweenCommands);
-				
+				}
 				OnPropertyChanged("ConnectionState");
 			}
 		}
 
 		public string LogText
 		{
-			get	{ return logText; }
-			set { logText = value; OnPropertyChanged("LogText"); }
+			get
+			{
+				return logText;
+			}
+
+			set
+			{
+				logText = value;
+				OnPropertyChanged("LogText");
+			}
 		}
 
 		public TimeSpan ElapsedTime
 		{
-			get { return elapsedTime; }
-			set { elapsedTime = value; OnPropertyChanged("ElapsedTime"); }
+			get
+			{
+				return elapsedTime;
+			}
+
+			set
+			{
+				elapsedTime = value;
+				OnPropertyChanged("ElapsedTime");
+			}
 		}
 
-        #endregion
+		#endregion Properties
 
-        #region CONSTRUCTOR
-
-        public MainViewModel()
+		public MainViewModel()
 		{
 			configuration = new ConfigReader();
 			commandExecutor = new FunctionExecutor(this, configuration);
             this.processingManager = new ProcessingManager(this, commandExecutor);
 			this.acquisitor = new Acquisitor(acquisitionTrigger, this.processingManager, this, configuration);
 			this.automationManager = new AutomationManager(this, processingManager, automationTrigger, configuration);
-
 			InitializePointCollection();
 			InitializeAndStartThreads();
-			
 			logBuilder = new StringBuilder();
 			ConnectionState = ConnectionState.DISCONNECTED;
-			
 			Thread.CurrentThread.Name = "Main Thread";
 		}
 
-        #endregion
+		#region Private methods
 
-        #region PRIVATE METHODS
-
-        private void InitializePointCollection()
+		private void InitializePointCollection()
 		{
 			Points = new ObservableCollection<BasePointItem>();
 			foreach (var c in configuration.GetConfigurationItems())
@@ -162,24 +182,24 @@ namespace dCom.ViewModel
 		{
 			while (timerThreadStopSignal)
 			{
-				if (disposed) return;
+				if (disposed)
+					return;
 
 				CurrentTime = DateTime.Now;
-				ElapsedTime = ElapsedTime.Add(new TimeSpan(0, 0, 1));				
+				ElapsedTime = ElapsedTime.Add(new TimeSpan(0, 0, 1));
 				acquisitionTrigger.Set();
                 automationTrigger.Set();
-
 				Thread.Sleep(1000);
 			}
 		}
 
-		#endregion
+		#endregion Private methods
 
-		#region ISTATEUPDATER
+		#region IStateUpdater implementation
 
 		public void UpdateConnectionState(ConnectionState currentConnectionState)
 		{
-			dispatcher.Invoke((Action)(() =>
+			dispather.Invoke((Action)(() =>
 			{
 				ConnectionState = currentConnectionState;
 			}));
@@ -187,11 +207,12 @@ namespace dCom.ViewModel
 
 		public void LogMessage(string message)
 		{
-			if (disposed) return;
+			if (disposed)
+				return;
 
 			string threadName = Thread.CurrentThread.Name;
 
-			dispatcher.Invoke((Action)(() =>
+			dispather.Invoke((Action)(() =>
 			{
 				lock (lockObject)
 				{
@@ -201,36 +222,31 @@ namespace dCom.ViewModel
 			}));
 		}
 
-        #endregion
+		#endregion IStateUpdater implementation
 
-        #region DISPOSE
-        
 		public void Dispose()
 		{
 			disposed = true;
 			timerThreadStopSignal = false;
-
 			(commandExecutor as IDisposable).Dispose();
 			this.acquisitor.Dispose();
 			acquisitionTrigger.Dispose();
 			automationManager.Stop();
             automationTrigger.Dispose();
 		}
-        
-		#endregion
 
-        // Dobavi sve tražene tačke (lista pointIds)
-        public List<IPoint> GetPoints(List<PointIdentifier> pointIds)
+		public List<IPoint> GetPoints(List<PointIdentifier> pointIds)
 		{
 			List<IPoint> retVal = new List<IPoint>(pointIds.Count);
-			
 			foreach (var pid in pointIds)
 			{
 				int id = PointIdentifierHelper.GetNewPointId(pid);
 				IPoint p = null;
-				if (pointsCache.TryGetValue(id, out p))	retVal.Add(p);
+				if (pointsCache.TryGetValue(id, out p))
+				{
+					retVal.Add(p);
+				}
 			}
-
 			return retVal;
 		}
 	}
